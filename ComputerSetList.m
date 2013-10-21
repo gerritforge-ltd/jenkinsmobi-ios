@@ -1,0 +1,49 @@
+// Copyright (C) 2012 LMIT Limited
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and 
+// limitations under the License.
+
+#import "ComputerSetList.h"
+#import "ComputerSetXmlParser.h"
+
+
+@implementation ComputerSetList
+
+@synthesize computers, busyExecutors;
+
+-(id)init{
+    
+    self = [super init];
+    
+	if(self){
+		
+		computers = [[NSMutableArray alloc] init];
+		[self setUrl:[NSString stringWithFormat:@"%@/computer",[[Configuration getInstance] url]]];
+		xmlDataParser = [[ComputerSetXmlParser alloc] initWithCaller:self andObjectToStore:self];
+	}
+
+	return self;
+}
+
+-(void)loadHudsonObject{
+
+    [computers removeAllObjects];
+    [super loadHudsonObject];
+}
+
+- (void) dealloc{
+	[computers release];
+	[super dealloc];
+}
+
+
+@end
